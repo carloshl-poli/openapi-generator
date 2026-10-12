@@ -67,9 +67,11 @@ Cobertura JaCoCo da classe: 97% das instruções e 90% dos desvios.
 
 #### Teste manual
 
-Caso: exemplos de resposta na documentação HTML gerada (CTM-EG-01), documentado em texto.
+Caso TestLink **oag-3**: exemplos de resposta na documentação HTML gerada (CTM-EG-01), versão 1. Execução **19**, registrada pela conta `hygor`, no Plano de Testes Manuais, build OpenAPI Generator v7.25.0.
 
 - [Roteiro do caso](hygor/testes-manuais/CTM-EG-01.md)
+- [Definição XML do caso com os identificadores do TestLink](hygor/testes-manuais/oag-3-exemplos-html.xml)
+- [Registro da execução no TestLink](hygor/testes-manuais/evidencias/testlink-execucao-oag-3.png)
 - [Arquivos de entrada](hygor/testes-manuais/entradas/)
 - [Evidências de execução](hygor/testes-manuais/evidencias/)
 
@@ -137,4 +139,4 @@ Nenhuma divergência observada; nenhuma issue aberta.
 
 ## TestLink
 
-- [Resultados do plano de testes](testlink/resultados-testlink.xls) (linhas oag-1, oag-2 e oag-4; a linha do oag-3/Hygor fica a cargo dele)
+- [Resultados do plano de testes](testlink/resultados-testlink.xls) (relatório "Test Results Flat" exportado em 13/10/2026 com as linhas oag-1, oag-2, oag-3 e oag-4)

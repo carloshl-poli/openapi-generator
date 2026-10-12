@@ -8,7 +8,7 @@ Texto para colar na linha "Hygor" de cada tabela do Plano de Teste (Google Docs)
 
 | Versão | Data | Por | Descrição |
 |---|---|---|---|
-| 3 | 12/10/2026 | Hygor | Preenchimento da contribuição referente aos testes unitários e ao teste manual de ExampleGenerator. |
+| 4 | 12/10/2026 | Hygor | Preenchimento da contribuição referente aos testes unitários e ao teste manual de ExampleGenerator. |
 
 ---
 
@@ -49,7 +49,7 @@ Responsável por ExampleGenerator:
 - matriz de casos e implementação em JUnit 5 (@Nested, @ParameterizedTest);
 - execução, medição de cobertura e registro PASS/FAIL;
 - triagem e relato das divergências no GitHub Issues;
-- elaboração e execução do caso manual CTM-EG-01 (geração de documentação HTML), documentado em texto.
+- elaboração e execução do caso manual CTM-EG-01 (geração de documentação HTML), registrado no TestLink como oag-3, execução 19, pela conta hygor.
 
 ---
 
@@ -76,7 +76,7 @@ Casos parametrizados (@ParameterizedTest com @CsvSource/@MethodSource) cobrem as
 
 | Teste unitário | Teste manual |
 |---|---|
-| 54 casos normativos (80 invocações) em JUnit 5; 54 executados; 48 PASS e 6 FAIL. | Caso CTM-EG-01: documentação HTML gerada pelo comando generate -g html; 7/7 passos executados; 4 PASS e 3 FAIL (passos 4, 5 e 6, mesmas divergências F1, F2 e F4); documentado em texto (o uso do TestLink pelo grupo está nos casos oag-1 e oag-2). |
+| 54 casos normativos (80 invocações) em JUnit 5; 54 executados; 48 PASS e 6 FAIL. | Caso CTM-EG-01: documentação HTML gerada pelo comando generate -g html; 7/7 passos executados; 4 PASS e 3 FAIL (passos 4, 5 e 6, mesmas divergências F1, F2 e F4); registrado no TestLink como oag-3, execução 19, pela conta hygor. |
 
 ## 2.3 Triagem de Erros
 
@@ -115,7 +115,7 @@ Os oráculos dos seis casos foram mantidos após a execução. O código de Exam
 - Critério: execução dos sete passos do caso CTM-EG-01. O caso gera a documentação HTML de duas especificações e confere o example de cada operação: controle com examples declarados e autorreferência, example inline, restrições numéricas, minItems, type object e objeto livre.
 - Situação registrada: executado na build v7.25.0; 7/7 passos; 4 PASS e 3 FAIL; resultado final FAIL.
 - Os passos 4, 5 e 6 reproduzem F1, F2 e F4 e por isso não geraram issues novas. O passo 7 mostrou que F3 não se manifesta pela CLI.
-- Execução documentada no roteiro CTM-EG-01.md, com a evidência ctm-eg-01-html.png, as páginas HTML geradas e os logs da CLI.
+- Execução registrada no TestLink como oag-3 (execução 19), pela conta hygor, e documentada no roteiro CTM-EG-01.md, com testlink-execucao-oag-3.png, ctm-eg-01-html.png, as páginas HTML geradas e os logs da CLI.
 
 ## 2.6 Atividades do projeto, estimativas e cronograma
 
@@ -125,7 +125,7 @@ Os oráculos dos seis casos foram mantidos após a execução. O código de Exam
 | 12/10 | Levantamento das regras R01–R13 e dos oráculos; busca de issues anteriores no repositório oficial |
 | 12/10 | Elaboração da matriz, implementação da suíte ExampleGeneratorJUnitTest.java, execução e medição de cobertura; segunda rodada guiada pela cobertura (CT-EG-49 a CT-EG-54): 48 PASS, 6 FAIL |
 | 12/10 | Triagem das quatro famílias e abertura das issues #25234 a #25237 no repositório oficial |
-| 12/10 | Elaboração e execução do caso manual CTM-EG-01 com a CLI gerada a partir do fork |
+| 12/10 | Elaboração e execução do caso manual CTM-EG-01 com a CLI gerada a partir do fork; registro no TestLink como oag-3, execução 19 |
 | 12/10 | Integração dos artefatos no Plano de Teste e no README |
 
 ---
@@ -141,17 +141,20 @@ Os oráculos dos seis casos foram mantidos após a execução. O código de Exam
 **Incidentes:** issues #25234 (F1), #25235 (F2), #25236 (F3) e #25237 (F4), no repositório oficial do OpenAPI Generator. O texto está em `entrega1/hygor/issues-ExampleGenerator.md`.
 
 **Teste manual:**
-- caso "Exemplos de resposta na documentação HTML gerada (CTM-EG-01)";
+- caso TestLink oag-3, "Exemplos de resposta na documentação HTML gerada (CTM-EG-01)", versão 1; execução 19 pela conta hygor, resultado Failed;
 - roteiro: `entrega1/hygor/testes-manuais/CTM-EG-01.md`;
-- versão do caso no formato de importação do TestLink: `entrega1/hygor/testes-manuais/oag-3-exemplos-html.xml`.
+- definição completa do caso com identificadores do TestLink: `entrega1/hygor/testes-manuais/oag-3-exemplos-html.xml`.
 
 **Evidências manuais:**
-- `entrega1/hygor/testes-manuais/evidencias/`: ctm-eg-01-html.png, as páginas HTML geradas e os logs da CLI;
+- `entrega1/hygor/testes-manuais/evidencias/`: testlink-execucao-oag-3.png, ctm-eg-01-html.png, as páginas HTML geradas e os logs da CLI;
+- relatório coletivo Test Results Flat: `entrega1/testlink/resultados-testlink.xls`;
 - arquivos de entrada em `entrega1/hygor/testes-manuais/entradas/`.
 
 **Evidências unitárias:** relatórios do Surefire e do JaCoCo gerados ao executar a suíte (`modules/openapi-generator/target/surefire-reports/` e `modules/openapi-generator/target/site/jacoco/`).
 
 ## 4.1 Ferramentas de Teste
+
+- **TestLink:** Hygor, cenário CTM-EG-01, caso oag-3, execução 19, no projeto "OpenAPI Generator - Grupo 6" (http://147.15.86.250:8080/).
 
 - **JUnit 5 Params:** @ParameterizedTest com @CsvSource e @MethodSource; @Nested para agrupar os casos por regra.
 

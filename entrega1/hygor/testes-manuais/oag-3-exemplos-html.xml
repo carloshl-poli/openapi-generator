@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testcases>
-<testcase name="Exemplos de resposta na documentação HTML gerada (CTM-EG-01)">
+<testcase internalid="139" name="Exemplos de resposta na documentação HTML gerada (CTM-EG-01)">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[3]]></externalid>
+	<version><![CDATA[1]]></version>
 	<summary><![CDATA[<p>Verificar, no nível do sistema, se os exemplos de resposta exibidos na documentação HTML gerada pelo OpenAPI Generator (produzidos pela classe ExampleGenerator) preservam os example declarados, terminam diante de autorreferência e são instâncias válidas do schema quando o valor é gerado (maximum, exclusiveMinimum, minItems, type: object).</p><p>Os resultados esperados se baseiam nas regras R03, R04, R07, R09 e R12 da planilha de oráculos e na especificação OpenAPI 3.0.3 (Schema Object, example: "A free-form property to include an example of an instance for this schema").</p>]]></summary>
 	<preconditions><![CDATA[<p>- OpenAPI Generator v7.25.0 (commit ef964b04480889ef86b56cfae84ade8ad4c91c41).<br />- CLI gerada com ./mvnw -pl modules/openapi-generator-cli -am package -DskipTests.<br />- Ambiente Java funcional e navegador.<br />- Execução a partir da raiz do repositório.<br />- Arquivos de entrada em entrega1/hygor/testes-manuais/entradas/: spec-exemplos.yaml e spec-objeto-livre.yaml.</p>]]></preconditions>
 	<execution_type><![CDATA[1]]></execution_type>

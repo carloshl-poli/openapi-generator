@@ -66,11 +66,15 @@ Os resultados esperados vêm das regras R04, R07, R09 e R12 da planilha de orác
 
 ## Registro
 
-Caso documentado em texto, como o enunciado permite para os casos além do cenário no TestLink (o grupo usa o TestLink nos casos oag-1 e oag-2). O arquivo [`oag-3-exemplos-html.xml`](oag-3-exemplos-html.xml) traz o mesmo caso no formato de importação do TestLink.
+Caso **oag-3**, versão 1, registrado no TestLink na suíte **Hygor - Exemplos de resposta na documentação (ExampleGenerator)**, projeto **OpenAPI Generator - Grupo 6**, plano **Plano de Testes Manuais**. Autor e testador: `hygor`. Registro da execução: **19**, build **OpenAPI Generator v7.25.0**, resultado **Failed**.
+
+O arquivo [`oag-3-exemplos-html.xml`](oag-3-exemplos-html.xml) preserva a definição completa importada, com os identificadores confirmados no TestLink (`internalid=139`, `externalid=3`, versão 1). O download XML do servidor veio incompleto, com 758 bytes e uma seção CDATA sem fechamento; por isso a definição completa foi mantida e os identificadores foram acrescentados, em vez de conservar o download inválido.
 
 Execução: 12/10/2026, build OpenAPI Generator v7.25.0, resultado **FALHOU** (passos 4, 5 e 6).
 
 Evidências:
+- [`evidencias/testlink-execucao-oag-3.png`](evidencias/testlink-execucao-oag-3.png): histórico da execução 19, testador `hygor`, resultado Failed e anexo no TestLink;
+- [`../../testlink/resultados-testlink.xls`](../../testlink/resultados-testlink.xls): relatório coletivo Test Results Flat, incluindo oag-1, oag-2 e oag-3;
 - [`evidencias/ctm-eg-01-html.png`](evidencias/ctm-eg-01-html.png): captura da página gerada no passo 1;
 - [`evidencias/html-spec-exemplos.html`](evidencias/html-spec-exemplos.html) e [`evidencias/html-spec-objeto-livre.html`](evidencias/html-spec-objeto-livre.html): páginas geradas;
 - [`evidencias/log-geracao-spec-exemplos.txt`](evidencias/log-geracao-spec-exemplos.txt) e [`evidencias/log-geracao-spec-objeto-livre.txt`](evidencias/log-geracao-spec-objeto-livre.txt): saída da CLI.
