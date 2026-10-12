@@ -1,0 +1,19 @@
+openapi: 3.0.3
+info:
+  title: Resposta de objeto livre com example (CTM-EG-01)
+  version: 1.0.0
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Objeto livre (sem properties) com example declarado
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: UP
+                  uptime: 42

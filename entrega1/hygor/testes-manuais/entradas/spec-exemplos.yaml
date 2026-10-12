@@ -1,0 +1,83 @@
+openapi: 3.0.3
+info:
+  title: Exemplos de resposta (CTM-EG-01)
+  version: 1.0.0
+paths:
+  /pets/{id}:
+    get:
+      operationId: getPet
+      summary: Controle - modelo com propriedades e autorreferência
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+  /status:
+    get:
+      operationId: getStatus
+      summary: Resposta inline de objeto com example declarado
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                example:
+                  id: 1
+                  name: Rex
+  /temperature:
+    get:
+      operationId: getTemperature
+      summary: Restrições numéricas e de array
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reading'
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        name:
+          type: string
+          example: Rex
+        parent:
+          $ref: '#/components/schemas/Pet'
+    Reading:
+      type: object
+      properties:
+        celsius:
+          type: integer
+          maximum: -5
+        level:
+          type: integer
+          minimum: 0
+          exclusiveMinimum: true
+        samples:
+          type: array
+          minItems: 3
+          items:
+            type: integer
+            example: 7
+        metadata:
+          type: object

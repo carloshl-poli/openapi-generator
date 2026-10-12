@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcases>
+<testcase name="Exemplos de resposta na documentação HTML gerada (CTM-EG-01)">
+	<summary><![CDATA[<p>Verificar, no nível do sistema, se os exemplos de resposta exibidos na documentação HTML gerada pelo OpenAPI Generator (produzidos pela classe ExampleGenerator) preservam os example declarados, terminam diante de autorreferência e são instâncias válidas do schema quando o valor é gerado (maximum, exclusiveMinimum, minItems, type: object).</p><p>Os resultados esperados se baseiam nas regras R03, R04, R07, R09 e R12 da planilha de oráculos e na especificação OpenAPI 3.0.3 (Schema Object, example: "A free-form property to include an example of an instance for this schema").</p>]]></summary>
+	<preconditions><![CDATA[<p>- OpenAPI Generator v7.25.0 (commit ef964b04480889ef86b56cfae84ade8ad4c91c41).<br />- CLI gerada com ./mvnw -pl modules/openapi-generator-cli -am package -DskipTests.<br />- Ambiente Java funcional e navegador.<br />- Execução a partir da raiz do repositório.<br />- Arquivos de entrada em entrega1/hygor/testes-manuais/entradas/: spec-exemplos.yaml e spec-objeto-livre.yaml.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration>10.00</estimated_exec_duration>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Gerar a documentação HTML:</p><p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g html -i entrega1/hygor/testes-manuais/entradas/spec-exemplos.yaml -o /tmp/ctm-eg-html</p><p>echo $?</p><p>Abrir /tmp/ctm-eg-html/index.html no navegador.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Código de saída 0. index.html criado com GET /pets/{id}, GET /status e GET /temperature, cada uma com a seção Example data.</p><p>Base: R12 (geração termina mesmo com Pet.parent referenciando Pet).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Em GET /pets/{id}, ler a seção Example data.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Content-Type: application/json; JSON com "id" : 10 e "name" : "Rex" (examples declarados); sem laço infinito por causa de parent.</p><p>Base: R04, R12.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Em GET /status, ler a seção Example data.</p>]]></actions>
+	<expectedresults><![CDATA[<p>O example declarado aparece intacto: {"id" : 1, "name" : "Rex"}, com Content-Type: application/json.</p><p>Base: R03, R04.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Em GET /temperature, ler os campos celsius e level do Example data.</p>]]></actions>
+	<expectedresults><![CDATA[<p>celsius &lt;= -5 (maximum: -5) e level &gt; 0 (minimum: 0 com exclusiveMinimum: true).</p><p>Base: R07; OAS 3.0.3 Schema Object (example de uma instância do schema); JSON Schema Validation wright-00, 5.2 e 5.4/5.5.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[5]]></step_number>
+	<actions><![CDATA[<p>Em GET /temperature, ler o campo samples do Example data.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Array com pelo menos 3 itens (minItems: 3).</p><p>Base: R09; JSON Schema Validation wright-00, 5.11.</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[6]]></step_number>
+	<actions><![CDATA[<p>Em GET /temperature, ler o campo metadata do Example data.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Um objeto JSON (type: object), por exemplo { }.</p><p>Base: R12; JSON Schema Validation wright-00, 5.21 (type).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[7]]></step_number>
+	<actions><![CDATA[<p>Gerar a documentação da especificação de objeto livre:</p><p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g html -i entrega1/hygor/testes-manuais/entradas/spec-objeto-livre.yaml -o /tmp/ctm-eg-html2</p><p>echo $?</p><p>Abrir /tmp/ctm-eg-html2/index.html e ler o Example data de GET /health.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Código de saída 0; Content-Type: application/json; {"status" : "UP", "uptime" : 42}.</p><p>Base: R03, R04 (contraparte de sistema de CT-EG-45).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+</testcase>
+</testcases>

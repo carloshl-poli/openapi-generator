@@ -52,6 +52,37 @@ Resultado: **FAIL — 6/6 passos executados; 5 PASS e 1 FAIL (passo 4)**.
 - [#25232](https://github.com/OpenAPITools/openapi-generator/issues/25232): recomendação "Unused model" emitida com as recomendações desligadas (CT-OE-07 e passo 4 de oag-2).
 - [#25233](https://github.com/OpenAPITools/openapi-generator/issues/25233): default numérico igual a um item do enum, mas com escala diferente, acusado como fora do enum (CT-OE-14).
 
+### Hygor
+
+#### Testes unitários
+
+- [ExampleGeneratorJUnitTest.java](../modules/openapi-generator/src/test/java/org/openapitools/codegen/examples/ExampleGeneratorJUnitTest.java)
+- [Oráculos e matriz de testes](hygor/planilha-oraculos-matriz-ExampleGenerator.xlsx)
+
+Classe sob teste: `org.openapitools.codegen.examples.ExampleGenerator` (complexidade ciclomática 112 na classe; 32 em `resolvePropertyToExample`).
+
+Resultado da suíte: **54 casos executados (80 invocações JUnit): 48 PASS e 6 FAIL**.
+
+Cobertura JaCoCo da classe: 97% das instruções e 90% dos desvios.
+
+#### Teste manual
+
+Caso: exemplos de resposta na documentação HTML gerada (CTM-EG-01), documentado em texto.
+
+- [Roteiro do caso](hygor/testes-manuais/CTM-EG-01.md)
+- [Arquivos de entrada](hygor/testes-manuais/entradas/)
+- [Evidências de execução](hygor/testes-manuais/evidencias/)
+
+Resultado: **FAIL: 7/7 passos executados; 4 PASS e 3 FAIL (passos 4, 5 e 6)**.
+
+#### Issues
+
+- [Texto das issues](hygor/issues-ExampleGenerator.md)
+- [#25234](https://github.com/OpenAPITools/openapi-generator/issues/25234): valores numéricos gerados violam `maximum` negativo e `exclusiveMinimum` (CT-EG-24, CT-EG-25, passo 4 de CTM-EG-01).
+- [#25235](https://github.com/OpenAPITools/openapi-generator/issues/25235): arrays gerados ignoram `minItems` (CT-EG-29, passo 5 de CTM-EG-01).
+- [#25236](https://github.com/OpenAPITools/openapi-generator/issues/25236): chaves de um `example` objeto viram tipos de mídia em `generateFromResponseSchema` (CT-EG-45).
+- [#25237](https://github.com/OpenAPITools/openapi-generator/issues/25237): `type: object` sem propriedades gera a string `"{}"` ou `null` (CT-EG-48, CT-EG-52, passo 6 de CTM-EG-01).
+
 ## TestLink
 
 - [Resultados do plano de testes](testlink/resultados-testlink.xls)

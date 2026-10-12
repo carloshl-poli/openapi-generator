@@ -1,0 +1,14 @@
+[main] INFO  o.o.codegen.DefaultGenerator - Generating with dryRun=false
+[main] INFO  o.o.c.ignore.CodegenIgnoreProcessor - Output directory (/tmp/ctm-eg-html2) does not exist, or is inaccessible. No file (.openapi-generator-ignore) will be evaluated.
+[main] INFO  o.o.codegen.DefaultGenerator - OpenAPI Generator: html (documentation)
+[main] INFO  o.o.codegen.DefaultGenerator - Generator 'html' is considered stable.
+[main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+[main] INFO  o.o.codegen.TemplateManager - writing file /tmp/ctm-eg-html2/index.html
+[main] INFO  o.o.codegen.TemplateManager - writing file /tmp/ctm-eg-html2/.openapi-generator-ignore
+[main] INFO  o.o.codegen.TemplateManager - writing file /tmp/ctm-eg-html2/.openapi-generator/VERSION
+[main] INFO  o.o.codegen.TemplateManager - writing file /tmp/ctm-eg-html2/.openapi-generator/FILES
+############################################################################################
+# Thanks for using OpenAPI Generator.                                                      #
+# We appreciate your support! Please consider donating to help us maintain this project.   #
+# https://opencollective.com/openapi_generator/donate                                      #
+############################################################################################
