@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcases>
+<testcase internalid="130" name="Validar especificações com o comando validate da CLI (CTM-OE-01)">
+	<node_order><![CDATA[1000]]></node_order>
+	<externalid><![CDATA[2]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Verificar, no n&iacute;vel do sistema, se o comando validate da interface de linha de comando (CLI) do OpenAPI Generator, que utiliza a classe OpenApiEvaluator, reporta corretamente: especifica&ccedil;&otilde;es v&aacute;lidas, erros estruturais, recomenda&ccedil;&otilde;es (avisos de boas pr&aacute;ticas, que s&oacute; devem aparecer com a op&ccedil;&atilde;o --recommend) e tags duplicadas.</p>
+
+<p>Os resultados esperados se baseiam em docs/usage.md (se&ccedil;&atilde;o validate), nas regras R02, R03, R09 e R11 da planilha de or&aacute;culos e na especifica&ccedil;&atilde;o OpenAPI 3.0 (&quot;Each tag name in the list MUST be unique&quot;). O passo 4 &eacute; a contraparte, no n&iacute;vel do sistema, do caso unit&aacute;rio CT-OE-07, que verifica se a recomenda&ccedil;&atilde;o de esquema n&atilde;o utilizado deixa de ser emitida quando as recomenda&ccedil;&otilde;es est&atilde;o desligadas.</p>
+]]></summary>
+	<preconditions><![CDATA[<p>- OpenAPI Generator v7.25.0 dispon&iacute;vel e compilado (commit ef964b04480889ef86b56cfae84ade8ad4c91c41).<br />
+- CLI dispon&iacute;vel em modules/openapi-generator-cli/target/openapi-generator-cli.jar (gerada com ./mvnw -pl modules/openapi-generator-cli -am package -DskipTests).<br />
+- Ambiente Java funcional.<br />
+- Execu&ccedil;&atilde;o realizada a partir da raiz do reposit&oacute;rio.<br />
+- Arquivos de entrada da pasta entrega1/gabriel/testes-manuais/entradas/ do reposit&oacute;rio copiados para /tmp/oag-validate: spec-valida.yaml (especifica&ccedil;&atilde;o correta), spec-sem-info.yaml (sem o campo obrigat&oacute;rio info), spec-recomendacoes.yaml (esquema Orphan n&atilde;o utilizado e GET /pets/search com request body) e spec-tags-duplicadas.yaml (tags [pet, pet, store]).<br />
+- Nenhuma propriedade de sistema openapi.generator.rule.* definida (configura&ccedil;&atilde;o padr&atilde;o).<br />
+- Ap&oacute;s cada comando, executar echo $? para registrar o c&oacute;digo de sa&iacute;da.</p>
+]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration>5.00</estimated_exec_duration>
+	<status>7</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Verificar a vers&atilde;o da CLI:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar version</p>
+
+<p>echo $?</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>Imprime 7.25.0. C&oacute;digo de sa&iacute;da 0.</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Validar a especifica&ccedil;&atilde;o correta:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar validate -i /tmp/oag-validate/spec-valida.yaml</p>
+
+<p>echo $?</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>Imprime &quot;Validating spec (/tmp/oag-validate/spec-valida.yaml)&quot; e &quot;No validation issues detected.&quot;, sem se&ccedil;&otilde;es Errors: ou Warnings:. C&oacute;digo de sa&iacute;da 0.</p>
+
+<p>Base: docs/usage.md (exemplo de especifica&ccedil;&atilde;o v&aacute;lida).</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Validar a especifica&ccedil;&atilde;o sem o campo obrigat&oacute;rio info:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar validate -i /tmp/oag-validate/spec-sem-info.yaml</p>
+
+<p>echo $?</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>Se&ccedil;&atilde;o Errors: com &quot;- attribute info is missing&quot; e linha final &quot;[error] Spec has 1 errors.&quot;. C&oacute;digo de sa&iacute;da 1.</p>
+
+<p>Base: docs/usage.md (exemplo de especifica&ccedil;&atilde;o inv&aacute;lida).</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Validar a especifica&ccedil;&atilde;o com esquema n&atilde;o utilizado e GET com request body, SEM a op&ccedil;&atilde;o --recommend:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar validate -i /tmp/oag-validate/spec-recomendacoes.yaml</p>
+
+<p>echo $?</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>Nenhuma recomenda&ccedil;&atilde;o listada: n&atilde;o aparecem &quot;Unused model: Orphan&quot; nem o aviso de GET/HEAD com request body. Imprime &quot;No validation issues detected.&quot;. C&oacute;digo de sa&iacute;da 0.</p>
+
+<p>Base: regra R03; docs/usage.md (recomenda&ccedil;&otilde;es s&atilde;o opcionais, ativadas por --recommend).</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[5]]></step_number>
+	<actions><![CDATA[<p>Validar a mesma especifica&ccedil;&atilde;o COM a op&ccedil;&atilde;o --recommend:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar validate -i /tmp/oag-validate/spec-recomendacoes.yaml --recommend</p>
+
+<p>echo $?</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>Se&ccedil;&atilde;o Warnings: com exatamente dois itens, em qualquer ordem: &quot;Unused model: Orphan&quot; e &quot;While technically allowed, GET/HEAD with request body may indicate programming error, and is considered an anti-pattern.&quot;. Linha final &quot;[info] Spec has 2 recommendation(s).&quot;. C&oacute;digo de sa&iacute;da 0.</p>
+
+<p>Base: regras R02 e R09.</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[6]]></step_number>
+	<actions><![CDATA[<p>Validar a especifica&ccedil;&atilde;o com tags duplicadas:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar validate -i /tmp/oag-validate/spec-tags-duplicadas.yaml</p>
+
+<p>echo $?</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>Se&ccedil;&atilde;o Errors: com &quot;- attribute tags.pet is repeated&quot;; se&ccedil;&atilde;o Warnings: com &quot;Duplicated tag(s): pet&quot;, sem citar store; linha final &quot;[error] Spec has 1 errors.&quot;. C&oacute;digo de sa&iacute;da 1.</p>
+
+<p>Base: regra R11; especifica&ccedil;&atilde;o OpenAPI 3.0 (nomes de tags &uacute;nicos).</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+</testcase>
+</testcases>

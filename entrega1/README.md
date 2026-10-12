@@ -25,6 +25,33 @@ Caso: processamento de `.openapi-generator-ignore`.
 
 Resultado: **PASS — 6/6 passos executados com sucesso**.
 
+### Gabriel
+
+#### Testes unitários
+
+- [OpenApiEvaluatorJUnitTest.java](../modules/openapi-generator/src/test/java/org/openapitools/codegen/validations/oas/OpenApiEvaluatorJUnitTest.java)
+- [Oráculos e matriz de testes](gabriel/planilha-oraculos-matriz-OpenApiEvaluator.xlsx)
+
+Resultado da suíte: **28 casos executados — 26 PASS e 2 FAIL**.
+
+Cobertura JaCoCo de `validate(OpenAPI)`: 100% das instruções e 100% dos desvios.
+
+#### Teste manual
+
+Caso: comando `validate` da CLI (oag-2, CTM-OE-01).
+
+- [Roteiro do caso](gabriel/testes-manuais/CTM-OE-01.md)
+- [Especificação exportada do TestLink](gabriel/testes-manuais/oag-2-validate-cli.xml)
+- [Arquivos de entrada](gabriel/testes-manuais/entradas/)
+- [Evidências de execução](gabriel/testes-manuais/evidencias/)
+
+Resultado: **FAIL — 6/6 passos executados; 5 PASS e 1 FAIL (passo 4)**.
+
+#### Issues
+
+- [#25232](https://github.com/OpenAPITools/openapi-generator/issues/25232): recomendação "Unused model" emitida com as recomendações desligadas (CT-OE-07 e passo 4 de oag-2).
+- [#25233](https://github.com/OpenAPITools/openapi-generator/issues/25233): default numérico igual a um item do enum, mas com escala diferente, acusado como fora do enum (CT-OE-14).
+
 ## TestLink
 
 - [Resultados do plano de testes](testlink/resultados-testlink.xls)
