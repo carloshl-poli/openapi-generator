@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: CTM-OE-01 especificação com recomendações
+  version: 1.0.0
+paths:
+  /pets/search:
+    get:
+      operationId: searchPets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Resultado da busca
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        name:
+          type: string
+    Orphan:
+      type: object
+      properties:
+        id:
+          type: integer

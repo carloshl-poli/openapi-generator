@@ -1,0 +1,8 @@
+openapi: 3.0.3
+paths:
+  /pets:
+    get:
+      operationId: listPets
+      responses:
+        '200':
+          description: Lista de pets

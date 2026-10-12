@@ -1,0 +1,17 @@
+openapi: 3.0.3
+info:
+  title: CTM-OE-01 especificação com tags duplicadas
+  version: 1.0.0
+tags:
+  - name: pet
+  - name: pet
+  - name: store
+paths:
+  /pets:
+    get:
+      operationId: listPets
+      tags:
+        - pet
+      responses:
+        '200':
+          description: Lista de pets
