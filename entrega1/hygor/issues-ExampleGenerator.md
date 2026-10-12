@@ -145,13 +145,15 @@ In `generateFromResponseSchema(Schema, Set)`, handle any non-null `example` (inc
 
 ---
 
-## F4: [BUG] ExampleGenerator returns the string "{}" for `type: object` properties without `properties` (and for unresolved `$ref`)
+## F4: [BUG] ExampleGenerator returns the string "{}" (or null) for `type: object` schemas without `properties`
 
-**Casos:** CT-EG-48; CTM-EG-01 passo 6.
+**Casos:** CT-EG-48, CT-EG-52; CTM-EG-01 passo 6.
 
 ##### Description
 
 `resolvePropertyToExample` returns the Java string literal `"{}"` for an object schema without properties and for a `$ref` that cannot be resolved. `Json.pretty` then serializes it as a JSON **string** (`"metadata" : "{}"`) instead of an empty object (`"metadata" : { }`), so the example has the wrong type (JSON Schema Validation wright-00, 5.21).
+
+The same happens one level up. For a top-level model `type: object` without `properties`, `resolveModelToExample` falls through to `return null`, and `generate(null, ["application/json"], "Anything")` returns the example `null`. Through the CLI this model gets unaliased first, so the operation simply has no example; only programmatic callers see `null`.
 
 ##### openapi-generator version
 
@@ -175,4 +177,4 @@ components:
 
 ##### Suggest a fix
 
-Return `new LinkedHashMap<>()` (an empty map) instead of the string `"{}"` in both branches.
+Return `new LinkedHashMap<>()` (an empty map) instead of the string `"{}"` in both branches of `resolvePropertyToExample`, and also for object schemas without properties in `resolveModelToExample`.

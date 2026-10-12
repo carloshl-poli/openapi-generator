@@ -61,9 +61,9 @@ Resultado: **FAIL — 6/6 passos executados; 5 PASS e 1 FAIL (passo 4)**.
 
 Classe sob teste: `org.openapitools.codegen.examples.ExampleGenerator` (complexidade ciclomática 112 na classe; 32 em `resolvePropertyToExample`).
 
-Resultado da suíte: **48 casos executados (68 invocações JUnit): 43 PASS e 5 FAIL**.
+Resultado da suíte: **54 casos executados (80 invocações JUnit): 48 PASS e 6 FAIL**.
 
-Cobertura JaCoCo da classe: 97% das instruções e 84% dos desvios.
+Cobertura JaCoCo da classe: 97% das instruções e 90% dos desvios.
 
 #### Teste manual
 
@@ -82,7 +82,7 @@ Resultado: **FAIL: 7/7 passos executados; 4 PASS e 3 FAIL (passos 4, 5 e 6)**.
 - F1 #NNNN: valores numéricos gerados violam `maximum` negativo e `exclusiveMinimum` (CT-EG-24, CT-EG-25, passo 4 de oag-3).
 - F2 #NNNN: arrays gerados ignoram `minItems` (CT-EG-29, passo 5 de oag-3).
 - F3 #NNNN: chaves de um `example` objeto viram tipos de mídia em `generateFromResponseSchema` (CT-EG-45).
-- F4 #NNNN: `type: object` sem propriedades gera a string `"{}"` (CT-EG-48, passo 6 de oag-3).
+- F4 #NNNN: `type: object` sem propriedades gera a string `"{}"` ou `null` (CT-EG-48, CT-EG-52, passo 6 de oag-3).
 
 ## TestLink
 

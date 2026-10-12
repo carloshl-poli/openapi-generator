@@ -20,7 +20,7 @@ Texto para colar na linha "Hygor" de cada tabela do Plano de Teste (Google Docs)
 **Função:** gerar os exemplos de corpo de resposta (JSON/XML) de cada operação a partir dos schemas da especificação. DefaultCodegen.fromOperation guarda esses exemplos em op.examples, que aparecem na documentação gerada (html, html2, confluence) e nos stubs de servidor (Spring, WireMock, ASP.NET, Kotlin).
 **Complexidade:** segundo o JaCoCo, a classe tem complexidade ciclomática 112, e resolvePropertyToExample tem 32 (uma cadeia de 14 tipos de schema, com recursão para arrays, mapas e $ref).
 **Regras R01–R13 consolidam:** estrutura da saída e tipos de mídia; precedência de exemplos explícitos e declarados; generateFromResponseSchema; reprodutibilidade (semente fixa); restrições numéricas (minimum/maximum/exclusive*); precedência em strings e booleans; arrays (maxItems/minItems, limite de 5); mapas; formatos fixos e tipos numéricos; modelos, $ref e ciclos; composição allOf/oneOf.
-**Suíte normativa:** 48 casos (CT-EG-01 a CT-EG-48), 68 invocações JUnit, implementados em JUnit 5 com @Nested e @ParameterizedTest.
+**Suíte normativa:** 54 casos (CT-EG-01 a CT-EG-54), 80 invocações JUnit, implementados em JUnit 5 com @Nested e @ParameterizedTest.
 
 ## 1.1.2 Fora do escopo
 
@@ -29,7 +29,8 @@ XmlExampleGenerator, exercitado só na medida em que define se há saída XML; a
 - E2: strings ignoram minLength/maxLength/pattern;
 - E3: oneOf sem alternativa válida gera "null";
 - E4: array sem items;
-- E5: multipleOf.
+- E5: multipleOf;
+- E6: nome de modelo nulo gera a mensagem "Custom MIME type example not yet supported: application/json".
 
 ## 1.2 Objetivos de Qualidade
 
@@ -65,7 +66,7 @@ As regras de estrutura e precedência vêm dos comentários do código ("use a f
 - partição em classes de equivalência: tipo de schema, tipo de mídia, presença de example/default/enum, origem do valor e forma do modelo (simples, $ref, ciclo, allOf, oneOf);
 - análise de valor-limite: maxItems ausente/0/1/5/6/100; minimum = maximum; maximum negativo; minimum 0 exclusivo; data perto da meia-noite UTC.
 
-Casos parametrizados (@ParameterizedTest com @CsvSource/@MethodSource) cobrem as famílias de entradas com um único método e contam como um caso normativo cada. Depois de medir a cobertura, a suíte foi complementada com casos guiados pelos ramos não cobertos (CT-EG-41 a CT-EG-48), cada um justificado por uma regra funcional.
+Casos parametrizados (@ParameterizedTest com @CsvSource/@MethodSource) cobrem as famílias de entradas com um único método e contam como um caso normativo cada. Depois de medir a cobertura, a suíte foi complementada com casos guiados pelos ramos não cobertos (CT-EG-41 a CT-EG-48), cada um justificado por uma regra funcional. Uma segunda rodada (CT-EG-49 a CT-EG-54) cobriu os ramos que ainda faltavam e tinham comportamento esperado documentável; os ramos sem fonte ficaram fora (E3, E6).
 
 **Dublês de teste:** não foram necessários nesta entrega. ExampleGenerator recebe por construtor o mapa de schemas e o OpenAPI, que são objetos de modelo simples construídos diretamente no teste. As dependências estáticas (ModelUtils, Json) e o XmlExampleGenerator criado com "new" não podem ser substituídos sem refatoração. Isso limita o isolamento e fica como ponto para a Entrega 2 (Mockito com mockStatic ou extração de interface, como pede a issue #7523).
 
@@ -75,12 +76,12 @@ Casos parametrizados (@ParameterizedTest com @CsvSource/@MethodSource) cobrem as
 
 | Teste unitário | Teste manual |
 |---|---|
-| 48 casos normativos (68 invocações) em JUnit 5; 48 executados; 43 PASS e 5 FAIL. | Caso oag-3 (CTM-EG-01): documentação HTML gerada pelo comando generate -g html; 7/7 passos executados; 4 PASS e 3 FAIL (passos 4, 5 e 6, mesmas divergências F1, F2 e F4); registrado no TestLink. |
+| 54 casos normativos (80 invocações) em JUnit 5; 54 executados; 48 PASS e 6 FAIL. | Caso oag-3 (CTM-EG-01): documentação HTML gerada pelo comando generate -g html; 7/7 passos executados; 4 PASS e 3 FAIL (passos 4, 5 e 6, mesmas divergências F1, F2 e F4); registrado no TestLink. |
 
 ## 2.3 Triagem de Erros
 
-Foram observadas oito falhas, agrupadas em quatro famílias:
-- cinco casos unitários: CT-EG-24, com duas invocações, CT-EG-25, CT-EG-29, CT-EG-45 e CT-EG-48;
+Foram observadas nove falhas, agrupadas em quatro famílias:
+- seis casos unitários: CT-EG-24, com duas invocações, CT-EG-25, CT-EG-29, CT-EG-45, CT-EG-48 e CT-EG-52;
 - três passos do caso manual.
 
 **F1: restrições numéricas.** CT-EG-24 esperava valor ≤ -5 para maximum -5 (sem minimum), mas foi gerado 0 (integer) e -0,4004 (number). CT-EG-25 esperava valor > 0 para integer com minimum 0 exclusivo, mas foi gerado 0. O passo 4 de CTM-EG-01 reproduziu os dois pela CLI.
@@ -96,19 +97,19 @@ Foram observadas oito falhas, agrupadas em quatro famílias:
 - Na triagem, a divergência não se reproduziu pela CLI (passo 7), porque o swagger-parser entrega o example como ObjectNode do Jackson. Afeta o uso programático da biblioteca.
 - Classificação: defeito; severidade baixa; prioridade baixa. Issue #NNNN.
 
-**F4: object gerado como string.** CT-EG-48 esperava um objeto JSON para type: object sem properties, mas foi gerada a string "{}". O passo 6 reproduziu pela CLI.
-- Causa: resolvePropertyToExample devolve o literal String "{}" (o mesmo acontece com $ref inexistente).
+**F4: object gerado com o tipo errado.** CT-EG-48 esperava um objeto JSON para a propriedade type: object sem properties, mas foi gerada a string "{}"; o passo 6 reproduziu pela CLI. CT-EG-52 esperava um objeto JSON para um modelo de nível superior type: object sem properties, mas foi gerado null; pela CLI esse modelo é "desembrulhado" e a operação fica sem exemplo, então só o uso programático é afetado.
+- Causa: resolvePropertyToExample devolve o literal String "{}" (o mesmo acontece com $ref inexistente) e resolveModelToExample devolve null para modelo sem properties.
 - Classificação: defeito; severidade baixa; prioridade baixa. Issue #NNNN.
 
-Os oráculos dos cinco casos foram mantidos após a execução. O código de ExampleGenerator na baseline é idêntico ao do branch master, então as issues foram abertas no repositório oficial e não duplicam issues existentes (busca feita em 12/10/2026).
+Os oráculos dos seis casos foram mantidos após a execução. O código de ExampleGenerator na baseline é idêntico ao do branch master, então as issues foram abertas no repositório oficial e não duplicam issues existentes (busca feita em 12/10/2026).
 
 ## 2.5 Completude do Teste
 
 **Automático.**
-- Critério: cobertura das regras R01–R13, execução de todos os 48 casos normativos e registro das divergências. Os casos ambíguos foram separados da suíte normativa (E1–E5).
-- Situação registrada: 48/48 executados (68 invocações); 43 PASS e 5 FAIL, em quatro famílias reportadas.
-- Cobertura JaCoCo da classe, só com esta suíte: 97% das instruções (1136/1173), 84% dos desvios (167/198), 96% das linhas (255/266) e 100% dos métodos (13/13). resolvePropertyToExample sozinho: complexidade 32.
-- Ramos não cobertos: proteções defensivas, como property == null, que os chamadores não produzem; o ramo final return "" de resolvePropertyToExample; e casos de E3/E4, deixados fora por falta de oráculo.
+- Critério: cobertura das regras R01–R13, execução de todos os 54 casos normativos e registro das divergências. Os casos ambíguos foram separados da suíte normativa (E1–E6).
+- Situação registrada: 54/54 executados (80 invocações); 48 PASS e 6 FAIL, em quatro famílias reportadas.
+- Cobertura JaCoCo da classe, só com esta suíte: 97% das instruções (1140/1173), 90% dos desvios (179/198), 97% das linhas (257/266) e 100% dos métodos (13/13). resolvePropertyToExample sozinho: complexidade 32.
+- Ramos não cobertos (19): proteções inalcançáveis pela interface pública (Json.pretty e toXml nunca devolvem null; getSchemaItems nunca devolve null em OAS 3.0; allOf nulo depois de isAllOf); property == null em resolvePropertyToExample, que os chamadores não produzem; e os casos E3, E6 e de mapa com name, deixados fora por falta de oráculo.
 
 **Manual.**
 - Critério: execução dos sete passos do caso oag-3 (CTM-EG-01). O caso gera a documentação HTML de duas especificações e confere o example de cada operação: controle com examples declarados e autorreferência, example inline, restrições numéricas, minItems, type object e objeto livre.
@@ -122,7 +123,7 @@ Os oráculos dos cinco casos foram mantidos após a execução. O código de Exa
 |---|---|
 | 12/10 | Avaliação das classes candidatas (contagem de desvios), escolha de ExampleGenerator e medição da complexidade com JaCoCo |
 | 12/10 | Levantamento das regras R01–R13 e dos oráculos; busca de issues anteriores no repositório oficial |
-| 12/10 | Elaboração da matriz, implementação da suíte ExampleGeneratorJUnitTest.java, execução (43 PASS, 5 FAIL) e medição de cobertura |
+| 12/10 | Elaboração da matriz, implementação da suíte ExampleGeneratorJUnitTest.java, execução e medição de cobertura; segunda rodada guiada pela cobertura (CT-EG-49 a CT-EG-54): 48 PASS, 6 FAIL |
 | 12/10 | Triagem das quatro famílias e redação das issues |
 | 12/10 | Elaboração e execução do caso manual CTM-EG-01 com a CLI gerada a partir do fork; registro no TestLink |
 | 12/10 | Integração dos artefatos no Plano de Teste e no README |
@@ -135,7 +136,7 @@ Os oráculos dos cinco casos foram mantidos após a execução. O código de Exa
 - `modules/openapi-generator/src/test/java/org/openapitools/codegen/examples/ExampleGeneratorJUnitTest.java`
 - dependência de teste `junit-jupiter-params` adicionada em `modules/openapi-generator/pom.xml`, necessária para @ParameterizedTest
 
-**Oráculos, casos e resultados:** `entrega1/hygor/planilha-oraculos-matriz-ExampleGenerator.xlsx`. Abas: Resumo, Oráculos (R01–R13), Matriz de casos (48 casos), Defeitos (F1–F4) e Fora da suíte normativa (E1–E5).
+**Oráculos, casos e resultados:** `entrega1/hygor/planilha-oraculos-matriz-ExampleGenerator.xlsx`. Abas: Resumo, Oráculos (R01–R13), Matriz de casos (54 casos), Defeitos (F1–F4) e Fora da suíte normativa (E1–E6).
 
 **Incidentes:** issues #NNNN (F1), #NNNN (F2), #NNNN (F3) e #NNNN (F4). O texto está em `entrega1/hygor/issues-ExampleGenerator.md`.
 
