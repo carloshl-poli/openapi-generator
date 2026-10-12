@@ -1,10 +1,10 @@
 # Issues: ExampleGenerator
 
-Texto das issues das famílias F1–F4 (aba "Defeitos" da planilha). O código de `ExampleGenerator` na baseline v7.25.0 é idêntico ao do branch `master` do repositório oficial (verificado em 12/10/2026), então as issues podem ser abertas lá (https://github.com/OpenAPITools/openapi-generator/issues/new?template=bug_report.md) ou no fork do grupo.
+Texto das issues das famílias F1–F4 (aba "Defeitos" da planilha), abertas em 12/10/2026 no repositório oficial: [#25234](https://github.com/OpenAPITools/openapi-generator/issues/25234), [#25235](https://github.com/OpenAPITools/openapi-generator/issues/25235), [#25236](https://github.com/OpenAPITools/openapi-generator/issues/25236), [#25237](https://github.com/OpenAPITools/openapi-generator/issues/25237). O código de `ExampleGenerator` na baseline v7.25.0 é idêntico ao do branch `master` (verificado em 12/10/2026). As linhas "Casos" são referências internas e não foram publicadas nas issues.
 
 ---
 
-## F1: [BUG] ExampleGenerator: generated numeric examples violate `maximum` (negative, without `minimum`) and ignore `exclusiveMinimum`/`exclusiveMaximum`
+## F1 ([#25234](https://github.com/OpenAPITools/openapi-generator/issues/25234)): [BUG] ExampleGenerator: generated numeric examples violate `maximum` (negative, without `minimum`) and ignore `exclusiveMinimum`/`exclusiveMaximum`
 
 **Casos:** CT-EG-24 (integer e number), CT-EG-25; CTM-EG-01 passo 4.
 
@@ -73,7 +73,7 @@ In `randomNumber`, when only `max` is set, use `max - random.nextDouble()` (or a
 
 ---
 
-## F2: [BUG] ExampleGenerator: generated array examples ignore `minItems`
+## F2 ([#25235](https://github.com/OpenAPITools/openapi-generator/issues/25235)): [BUG] ExampleGenerator: generated array examples ignore `minItems`
 
 **Casos:** CT-EG-29; CTM-EG-01 passo 5.
 
@@ -113,7 +113,7 @@ components:
 
 ---
 
-## F3: [BUG] ExampleGenerator.generateFromResponseSchema treats the keys of an inline object `example` (java.util.Map) as media types
+## F3 ([#25236](https://github.com/OpenAPITools/openapi-generator/issues/25236)): [BUG] ExampleGenerator.generateFromResponseSchema treats the keys of an inline object `example` (java.util.Map) as media types
 
 **Casos:** CT-EG-45 (não reproduz pela CLI; ver CTM-EG-01 passo 7).
 
@@ -145,7 +145,7 @@ In `generateFromResponseSchema(Schema, Set)`, handle any non-null `example` (inc
 
 ---
 
-## F4: [BUG] ExampleGenerator returns the string "{}" (or null) for `type: object` schemas without `properties`
+## F4 ([#25237](https://github.com/OpenAPITools/openapi-generator/issues/25237)): [BUG] ExampleGenerator returns the string "{}" (or null) for `type: object` schemas without `properties`
 
 **Casos:** CT-EG-48, CT-EG-52; CTM-EG-01 passo 6.
 

@@ -64,16 +64,17 @@ Os resultados esperados vêm das regras R04, R07, R09 e R12 da planilha de orác
 
 ---
 
-## Registro no TestLink
+## Registro
 
-A cadastrar e executar no TestLink do grupo (http://147.15.86.250:8080/), importando [`oag-3-exemplos-html.xml`](oag-3-exemplos-html.xml):
-- Projeto: "OpenAPI Generator - Grupo 6"
-- Suíte: "Hygor - Exemplos de resposta na documentação (ExampleGenerator)"
-- Plano: "Plano de Testes Manuais"
-- Build: "OpenAPI Generator v7.25.0"
-- Execução: status **Failed** (passos 4, 5 e 6)
+Caso documentado em texto, como o enunciado permite para os casos além do cenário no TestLink (o grupo usa o TestLink nos casos oag-1 e oag-2). O arquivo [`oag-3-exemplos-html.xml`](oag-3-exemplos-html.xml) traz o mesmo caso no formato de importação do TestLink.
+
+Execução: 12/10/2026, build OpenAPI Generator v7.25.0, resultado **FALHOU** (passos 4, 5 e 6).
 
 Evidências:
 - [`evidencias/ctm-eg-01-html.png`](evidencias/ctm-eg-01-html.png): captura da página gerada no passo 1;
 - [`evidencias/html-spec-exemplos.html`](evidencias/html-spec-exemplos.html) e [`evidencias/html-spec-objeto-livre.html`](evidencias/html-spec-objeto-livre.html): páginas geradas;
 - [`evidencias/log-geracao-spec-exemplos.txt`](evidencias/log-geracao-spec-exemplos.txt) e [`evidencias/log-geracao-spec-objeto-livre.txt`](evidencias/log-geracao-spec-objeto-livre.txt): saída da CLI.
+
+## Issues
+
+- F1 [#25234](https://github.com/OpenAPITools/openapi-generator/issues/25234) (passo 4), F2 [#25235](https://github.com/OpenAPITools/openapi-generator/issues/25235) (passo 5), F4 [#25237](https://github.com/OpenAPITools/openapi-generator/issues/25237) (passo 6). F3 [#25236](https://github.com/OpenAPITools/openapi-generator/issues/25236) não se reproduz pela CLI (passo 7).

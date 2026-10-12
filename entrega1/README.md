@@ -67,10 +67,9 @@ Cobertura JaCoCo da classe: 97% das instruções e 90% dos desvios.
 
 #### Teste manual
 
-Caso: exemplos de resposta na documentação HTML gerada (oag-3, CTM-EG-01).
+Caso: exemplos de resposta na documentação HTML gerada (CTM-EG-01), documentado em texto.
 
 - [Roteiro do caso](hygor/testes-manuais/CTM-EG-01.md)
-- [Caso para o TestLink (XML)](hygor/testes-manuais/oag-3-exemplos-html.xml)
 - [Arquivos de entrada](hygor/testes-manuais/entradas/)
 - [Evidências de execução](hygor/testes-manuais/evidencias/)
 
@@ -79,10 +78,10 @@ Resultado: **FAIL: 7/7 passos executados; 4 PASS e 3 FAIL (passos 4, 5 e 6)**.
 #### Issues
 
 - [Texto das issues](hygor/issues-ExampleGenerator.md)
-- F1 #NNNN: valores numéricos gerados violam `maximum` negativo e `exclusiveMinimum` (CT-EG-24, CT-EG-25, passo 4 de oag-3).
-- F2 #NNNN: arrays gerados ignoram `minItems` (CT-EG-29, passo 5 de oag-3).
-- F3 #NNNN: chaves de um `example` objeto viram tipos de mídia em `generateFromResponseSchema` (CT-EG-45).
-- F4 #NNNN: `type: object` sem propriedades gera a string `"{}"` ou `null` (CT-EG-48, CT-EG-52, passo 6 de oag-3).
+- [#25234](https://github.com/OpenAPITools/openapi-generator/issues/25234): valores numéricos gerados violam `maximum` negativo e `exclusiveMinimum` (CT-EG-24, CT-EG-25, passo 4 de CTM-EG-01).
+- [#25235](https://github.com/OpenAPITools/openapi-generator/issues/25235): arrays gerados ignoram `minItems` (CT-EG-29, passo 5 de CTM-EG-01).
+- [#25236](https://github.com/OpenAPITools/openapi-generator/issues/25236): chaves de um `example` objeto viram tipos de mídia em `generateFromResponseSchema` (CT-EG-45).
+- [#25237](https://github.com/OpenAPITools/openapi-generator/issues/25237): `type: object` sem propriedades gera a string `"{}"` ou `null` (CT-EG-48, CT-EG-52, passo 6 de CTM-EG-01).
 
 ## TestLink
 
