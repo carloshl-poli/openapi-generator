@@ -45,7 +45,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * ({@code generate(Map, List, Schema)}, {@code generate(Map, List, String)} and
  * {@code generateFromResponseSchema(String, Schema, Set)}).
  * <p>
- * Cases CT-EG-01..CT-EG-48 follow the oracle rules R01..R12 of the test plan
+ * Cases CT-EG-01..CT-EG-54 follow the oracle rules R01..R12 of the test plan
  * (spreadsheet {@code entrega1/hygor/planilha-oraculos-matriz-ExampleGenerator.xlsx}).
  * The main oracle for generated values is the OpenAPI 3.0.3 Schema Object definition
  * of {@code example} ("an example of an instance for this schema"): a generated example
@@ -201,6 +201,13 @@ public class ExampleGeneratorJUnitTest {
             assertEquals(List.of(Map.of("output", "none")), out);
         }
 
+        @ParameterizedTest(name = "CT-EG-49: schema nulo com \"{0}\" resulta em output none")
+        @CsvSource({"application/json", "application/xml"})
+        void nullProperty(String mediaType) {
+            assertEquals(List.of(Map.of("output", "none")),
+                    emptyGenerator().generate(null, List.of(mediaType), (Schema) null));
+        }
+
         @Test
         @DisplayName("CT-EG-41: propriedade com application/xml gera exemplo XML")
         void propertyAsXml() {
@@ -286,14 +293,19 @@ public class ExampleGeneratorJUnitTest {
             assertTrue(example.get(0).asBoolean());
         }
 
-        @Test
-        @DisplayName("CT-EG-44: example primitivo pedido só em XML resulta em {output: none}")
-        void primitiveExampleAsXmlOnly() {
+        @ParameterizedTest(name = "CT-EG-44: example primitivo com produces \"{0}\" -> {1}")
+        @CsvSource({"application/xml, none", "text/plain, none", "*/*, json"})
+        void primitiveExampleByMediaType(String mediaType, String expected) {
             List<Map<String, String>> out = emptyGenerator()
-                    .generateFromResponseSchema("200", new StringSchema().example("pong"), produces(XML));
+                    .generateFromResponseSchema("200", new StringSchema().example("pong"), produces(mediaType));
 
             assertEquals(1, out.size());
-            assertEquals("none", out.get(0).get("output"));
+            if ("none".equals(expected)) {
+                assertEquals("none", out.get(0).get("output"), out.toString());
+            } else {
+                assertEquals("\"pong\"", out.get(0).get("example"));
+                assertEquals(JSON, out.get(0).get("generatedContentType"));
+            }
         }
 
         @Test
@@ -362,10 +374,19 @@ public class ExampleGeneratorJUnitTest {
             assertEquals("available", jsonExample(property).asText());
         }
 
+        @ParameterizedTest(name = "CT-EG-16: string com formato \"{0}\" (sem default/enum) usa o nome da propriedade")
+        @CsvSource(value = {"null", "email", "password"}, nullValues = "null")
+        void propertyNameFallback(String format) {
+            assertEquals("nickname", propertyInModel("nickname", new StringSchema().format(format)).asText());
+        }
+
         @Test
-        @DisplayName("CT-EG-16: string sem default, enum ou formato usa o nome da propriedade")
-        void propertyNameFallback() {
-            assertEquals("nickname", propertyInModel("nickname", new StringSchema()).asText());
+        @DisplayName("CT-EG-50: enum vazio é ignorado e usa o nome da propriedade")
+        void emptyEnumFallsBackToName() {
+            StringSchema property = new StringSchema();
+            property.setEnum(new ArrayList<>());
+
+            assertEquals("nickname", propertyInModel("nickname", property).asText());
         }
 
         @ParameterizedTest(name = "CT-EG-17: boolean com default={0} gera {1}")
@@ -638,13 +659,17 @@ public class ExampleGeneratorJUnitTest {
             assertTrue(value.get("barks").asBoolean());
         }
 
-        @Test
-        @DisplayName("CT-EG-37: oneOf usa a primeira alternativa com $ref resolvível")
-        void oneOfUsesFirstResolvableAlternative() {
+        @ParameterizedTest(name = "CT-EG-37: {0} usa a primeira alternativa com $ref resolvível")
+        @CsvSource({"oneOf", "anyOf"})
+        void firstResolvableAlternative(String keyword) {
             ComposedSchema pet = new ComposedSchema();
-            pet.addOneOfItem(ref("Missing"));
-            pet.addOneOfItem(ref("Cat"));
-            pet.addOneOfItem(ref("Dog"));
+            for (String target : List.of("Missing", "Cat", "Dog")) {
+                if ("oneOf".equals(keyword)) {
+                    pet.addOneOfItem(ref(target));
+                } else {
+                    pet.addAnyOfItem(ref(target));
+                }
+            }
             Map<String, Schema> components = schemas(
                     Map.entry("Cat", new ObjectSchema().addProperty("kind", new StringSchema().example("cat"))),
                     Map.entry("Dog", new ObjectSchema().addProperty("kind", new StringSchema().example("dog"))),
@@ -696,6 +721,58 @@ public class ExampleGeneratorJUnitTest {
             JsonNode value = propertyInModel("metadata", new ObjectSchema());
 
             assertTrue(value.isObject(), "type: object property generated as " + value.getNodeType() + " " + value);
+        }
+
+        @Test
+        @DisplayName("CT-EG-51: schema sem tipo (any type) não interrompe a geração do modelo")
+        void anyTypeProperty() {
+            Map<String, Schema> components = schemas(Map.entry("Box", new ObjectSchema()
+                    .addProperty("content", new Schema<>())
+                    .addProperty("id", new IntegerSchema().example(4))));
+
+            JsonNode value = modelExample(components, "Box");
+
+            assertTrue(value.has("content"));
+            assertEquals(4, value.get("id").asInt());
+        }
+
+        @Test
+        @DisplayName("CT-EG-52: modelo de nível superior type: object sem propriedades gera um objeto JSON")
+        void emptyTopLevelObjectModel() {
+            List<Map<String, String>> out = generator(schemas(Map.entry("Anything", new ObjectSchema())))
+                    .generate(null, List.of(JSON), "Anything");
+
+            JsonNode value = parse(out.get(0).get("example"));
+            assertTrue(value.isObject(), "type: object model generated as " + value.getNodeType() + " " + value);
+        }
+
+        @Test
+        @DisplayName("CT-EG-53: allOf aninhado (allOf de allOf) combina as propriedades de todos os níveis")
+        void nestedAllOf() {
+            ComposedSchema inner = new ComposedSchema();
+            inner.addAllOfItem(new ObjectSchema().addProperty("a", new IntegerSchema().example(1)));
+            inner.addAllOfItem(new ObjectSchema().addProperty("b", new IntegerSchema().example(2)));
+            ComposedSchema outer = new ComposedSchema();
+            outer.addAllOfItem(inner);
+            outer.addAllOfItem(new ObjectSchema().addProperty("c", new IntegerSchema().example(3)));
+
+            JsonNode value = modelExample(schemas(Map.entry("Outer", outer)), "Outer");
+
+            assertEquals(1, value.get("a").asInt());
+            assertEquals(2, value.get("b").asInt());
+            assertEquals(3, value.get("c").asInt());
+        }
+
+        @Test
+        @DisplayName("CT-EG-54: allOf com $ref inexistente ignora a parte e mantém as demais")
+        void allOfWithDanglingReference() {
+            ComposedSchema dog = new ComposedSchema();
+            dog.addAllOfItem(ref("Missing"));
+            dog.addAllOfItem(new ObjectSchema().addProperty("barks", new BooleanSchema()));
+
+            JsonNode value = assertDoesNotThrow(() -> modelExample(schemas(Map.entry("Dog", dog)), "Dog"));
+
+            assertTrue(value.get("barks").asBoolean());
         }
     }
 
