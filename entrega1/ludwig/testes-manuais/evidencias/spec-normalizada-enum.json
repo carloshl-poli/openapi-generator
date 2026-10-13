@@ -1,0 +1,82 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "CTM-NO-01 normalizer requirements",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "/"
+  } ],
+  "paths" : {
+    "/pets/{id}" : {
+      "get" : {
+        "operationId" : "getPet",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "tags" : [ "pet", "basic" ]
+      }
+    },
+    "/admin/status" : {
+      "get" : {
+        "operationId" : "adminStatus",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Status"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "tags" : [ "admin" ],
+        "x-internal" : true
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Pet" : {
+        "properties" : {
+          "id" : {
+            "example" : 10,
+            "type" : "integer"
+          },
+          "active" : {
+            "enum" : [ true, false ],
+            "type" : "boolean"
+          }
+        },
+        "required" : [ "id" ],
+        "type" : "object"
+      },
+      "Status" : {
+        "enum" : [ "UP", "DOWN" ],
+        "type" : "string",
+        "x-enum-descriptions" : [ "up", "down" ]
+      }
+    }
+  }
+}

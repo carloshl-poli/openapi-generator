@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: CTM-NO-01 normalizer requirements
+  version: 1.0.0
+paths:
+  /pets/{id}:
+    get:
+      tags:
+        - pet
+        - basic
+      operationId: getPet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+  /admin/status:
+    get:
+      tags:
+        - admin
+      operationId: adminStatus
+      x-internal: true
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          example: 10
+        active:
+          type: boolean
+          enum: [true, false]
+    Status:
+      type: string
+      oneOf:
+        - title: up
+          enum: [UP]
+        - title: down
+          enum: [DOWN]

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcases>
+<testcase name="Regras do normalizador OpenAPI via CLI (CTM-NO-01)">
+	<summary><![CDATA[<p>Verificar, no nível do sistema, se as regras do normalizador OpenAPI aplicadas via --openapi-normalizer (classe OpenAPINormalizer) reduzem as tags da operação ao esperado, simplificam boolean com enum e oneOf de enums unitários, e removem x-internal. A conferência é feita na especificação reemitida pelo gerador openapi.</p><p>Os resultados esperados se baseiam nas regras R01, R03, R04, R05 e R06 da planilha de oráculos e em docs/customization.md (seção do openapi-normalizer).</p>]]></summary>
+	<preconditions><![CDATA[<p>- OpenAPI Generator v7.25.0 (commit ef964b04480889ef86b56cfae84ade8ad4c91c41).<br />- CLI gerada com ./mvnw -pl modules/openapi-generator-cli -am package -DskipTests.<br />- Ambiente Java funcional.<br />- Execução a partir da raiz do repositório.<br />- Arquivo de entrada em entrega1/ludwig/testes-manuais/entradas/: spec-normalizer.yaml.</p>]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration>10.00</estimated_exec_duration>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Gerar a spec normalizada com a regra de primeira tag:</p><p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g openapi -i entrega1/ludwig/testes-manuais/entradas/spec-normalizer.yaml -o /tmp/ctm-no-keep --openapi-normalizer KEEP_ONLY_FIRST_TAG_IN_OPERATION=true,SIMPLIFY_BOOLEAN_ENUM=false,SIMPLIFY_ONEOF_ANYOF=false,SIMPLIFY_ONEOF_ANYOF_ENUM=false</p><p>echo $?</p><p>Abrir a spec gerada e ler as tags de GET /pets/{id}.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Código de saída 0. GET /pets/{id} com tags [pet]; restante intacto (liga só a sua regra e desliga as três simplificações, ligadas por padrão).</p><p>Base: R04 (CT-NO-19).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Gerar com tags fixas:</p><p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g openapi -i entrega1/ludwig/testes-manuais/entradas/spec-normalizer.yaml -o /tmp/ctm-no-settags --openapi-normalizer SET_TAGS_FOR_ALL_OPERATIONS=core,SIMPLIFY_BOOLEAN_ENUM=false,SIMPLIFY_ONEOF_ANYOF=false,SIMPLIFY_ONEOF_ANYOF_ENUM=false</p><p>Abrir a spec gerada e ler as tags das operações.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Código de saída 0. GET /pets/{id} e GET /admin/status com tags [core]; restante intacto.</p><p>Base: R05 (CT-NO-23).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Gerar com simplificação de boolean:</p><p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g openapi -i entrega1/ludwig/testes-manuais/entradas/spec-normalizer.yaml -o /tmp/ctm-no-bool --openapi-normalizer SIMPLIFY_BOOLEAN_ENUM=true,SIMPLIFY_ONEOF_ANYOF=false,SIMPLIFY_ONEOF_ANYOF_ENUM=false</p><p>Abrir a spec gerada e ler Pet.active.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Código de saída 0. active segue type: boolean sem enum; restante intacto.</p><p>Base: R01 (CT-NO-06).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Gerar com simplificação de oneOf/anyOf de enums:</p><p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g openapi -i entrega1/ludwig/testes-manuais/entradas/spec-normalizer.yaml -o /tmp/ctm-no-enum --openapi-normalizer SIMPLIFY_ONEOF_ANYOF_ENUM=true,SIMPLIFY_BOOLEAN_ENUM=false,SIMPLIFY_ONEOF_ANYOF=false</p><p>Abrir a spec gerada e ler o schema Status.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Código de saída 0. Status sem oneOf, com enum: [UP, DOWN]; restante intacto.</p><p>Base: R03 (CT-NO-15).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[5]]></step_number>
+	<actions><![CDATA[<p>Gerar com remoção de x-internal:</p><p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g openapi -i entrega1/ludwig/testes-manuais/entradas/spec-normalizer.yaml -o /tmp/ctm-no-xint --openapi-normalizer REMOVE_X_INTERNAL=true,SIMPLIFY_BOOLEAN_ENUM=false,SIMPLIFY_ONEOF_ANYOF=false,SIMPLIFY_ONEOF_ANYOF_ENUM=false</p><p>Abrir a spec gerada e buscar x-internal.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Código de saída 0. Nenhuma ocorrência de x-internal; restante intacto.</p><p>Base: R06 (CT-NO-26).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+<step>
+	<step_number><![CDATA[6]]></step_number>
+	<actions><![CDATA[<p>Controle com a regra desligada (as três simplificações são true por padrão):</p><p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g openapi -i entrega1/ludwig/testes-manuais/entradas/spec-normalizer.yaml -o /tmp/ctm-no-base --openapi-normalizer SIMPLIFY_BOOLEAN_ENUM=false,SIMPLIFY_ONEOF_ANYOF=false,SIMPLIFY_ONEOF_ANYOF_ENUM=false</p><p>Abrir a spec gerada e ler tags, Pet.active, Status e x-internal.</p>]]></actions>
+	<expectedresults><![CDATA[<p>Código de saída 0. GET /pets/{id} mantém tags [pet, basic]; Pet.active mantém enum [true, false]; Status mantém oneOf; x-internal presente.</p><p>Base: R04/R01/R03/R06 (contrapartes de CT-NO-22, CT-NO-08, CT-NO-13, CT-NO-28).</p>]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+</testcase>
+</testcases>

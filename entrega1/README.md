@@ -107,6 +107,34 @@ Caso: mescla de especificações e geração de código via CLI (CTM-MSB-01, cas
 
 Resultado: **PASS: 7/7 passos executados com sucesso**.
 
+### Carlos Bruno
+
+#### Testes unitários
+
+- [OpenAPINormalizerJUnitTest.java](../modules/openapi-generator/src/test/java/org/openapitools/codegen/OpenAPINormalizerJUnitTest.java)
+- [Oráculos e matriz de testes](ludwig/planilha-oraculos-matriz-OpenAPINormalizer.xlsx)
+
+Classe sob teste: `org.openapitools.codegen.OpenAPINormalizer` (complexidade ciclomática 509 na classe; 29 em `normalizeSchema`).
+
+Resultado da suíte: **46 casos executados (47 invocações JUnit): 47/47 PASS e 0 FAIL**.
+
+Cobertura JaCoCo da classe (só esta suíte, recorte R00–R06): 45% das instruções e 35% dos desvios; os métodos das regras testadas estão próximos de 100% (`getRule`, `skipNormalization`, `normalizeArraySchema`, `normalizeMapSchema`, `normalizeSimpleSchema`, `processRemoveXInternalFromOperation`, `processSetTagsForAllOperations`, `processSetTagsToOperationId` com 100% dos desvios; `normalizeSchema` com 39/56).
+
+#### Teste manual
+
+Caso: regras do normalizador OpenAPI via CLI (oag-4, CTM-NO-01), documentado em texto.
+
+- [Roteiro do caso](ludwig/testes-manuais/CTM-NO-01.md)
+- [Especificação de importação do TestLink](ludwig/testes-manuais/oag-4-normalizer.xml)
+- [Arquivos de entrada](ludwig/testes-manuais/entradas/)
+- [Evidências de execução](ludwig/testes-manuais/evidencias/)
+
+Resultado: **PASS — 6/6 passos executados com sucesso**.
+
+#### Issues
+
+Nenhuma divergência observada; nenhuma issue aberta.
+
 ## TestLink
 
-- [Resultados do plano de testes](testlink/resultados-testlink.xls)
+- [Resultados do plano de testes](testlink/resultados-testlink.xls) (linhas oag-1, oag-2 e oag-4; a linha do oag-3/Hygor fica a cargo dele)
