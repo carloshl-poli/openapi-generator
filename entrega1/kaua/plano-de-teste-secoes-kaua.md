@@ -71,6 +71,37 @@ Responsável por `MergedSpecBuilder`:
 
 ---
 
+## 2.2 Fases de Teste
+
+| Integrante | Teste unitário | Teste manual |
+|---|---|---|
+| Kauã | 28 casos normativos em JUnit 5 (com `@Nested` e `@TempDir`); 28 executados; **28 PASS e 0 FAIL**. | Caso CTM-MSB-01 (caso TestLink `oag-3`): mescla de especificações e geração de código via CLI (`--merge-mode` DEEP/REF, `--merge-conflict-strategy` WARN/FAIL e validação de versão); **7/7 passos executados; resultado PASS**. |
+
+---
+
+## 2.3 Triagem de Erros
+
+| Integrante | Descrição |
+|---|---|
+| Kauã | Todos os 28 casos de teste unitários normativos e todos os 7 passos do teste manual foram executados com sucesso (**100% PASS**), confirmando conformidade estrita da classe `MergedSpecBuilder` com os requisitos R01–R14, com a especificação OpenAPI 3.0/3.1 e com o comportamento documentado da interface de linha de comando. Não foram observadas divergências funcionais nem defeitos de implementação nessa baseline (v7.25.0). Por conseguinte, nenhuma issue de defeito precisou ser aberta no repositório oficial para esta unidade. |
+
+---
+
+## 2.4 Critérios de Suspensão e Requisitos de Retomada
+
+*(Observação: Esta seção no documento do Word é um texto geral e compartilhado do grupo, definindo a política coletiva da equipe para suspensão da execução diante de indisponibilidade de ambiente/build e retomada após saneamento. Não há linha individual por integrante).*
+
+---
+
+## 2.5 Completude do Teste
+
+| Integrante | Tipo de Teste | Critério e situação de completude |
+|---|---|---|
+| Kauã | Automático | **Critério:** cobertura das regras normativas R01–R14, execução de todos os 28 casos normativos da suíte `MergedSpecBuilderJUnitTest` e cobertura abrangente dos desvios condicionais das rotinas complexas da classe (`mergePathItem`, `resolveOperationIdConflicts`, `resolveOutputVersion` e `parseSpecFiles`).<br><br>**Situação registrada:** 28/28 casos executados; **28 PASS e 0 FAIL** (100% de sucesso). Cobertura JaCoCo da classe `MergedSpecBuilder`: **91% das instruções (1.565 / 1.717)**, **79% dos desvios/branches (144 / 182)**, 87% das linhas (349 / 399) e 91% dos métodos (21 / 23). Ramos residuais não cobertos correspondem a salvaguardas defensivas contra exceções genéricas de I/O e checagens nulas inalcançáveis pela interface pública. |
+| Kauã | Manual | **Critério:** execução completa dos 7 passos do caso manual CTM-MSB-01 (suíte TestLink `oag-3`), exercitando na CLI real a mescla de rotas e componentes em modo `DEEP`, apontadores em modo `REF`, tratamento de conflito de rotas sob `WARN` e `FAIL`, e rejeição de versões incompatíveis (OAS 3.0 vs 3.1).<br><br>**Situação registrada:** caso CTM-MSB-01 executado na build OpenAPI Generator v7.25.0 (`openapi-generator-cli.jar`); **7/7 passos executados com sucesso; resultado final PASS**. Especificações consolidadas geradas com êxito (`api_unificada.yaml` e `api_ref.yaml`), logs capturados com sucesso demonstrando o comportamento correto de warnings e abortamento controlado por exceção. Execução documentada no roteiro `CTM-MSB-01.md`, com todas as evidências registradas na pasta `evidencias/` e caso exportado no formato XML do TestLink (`oag-3-merged-spec-cli.xml`). |
+
+---
+
 ## 2.6 Atividades do projeto, estimativas e cronograma
 
 - **12/10:** Escolha da classe `MergedSpecBuilder`, medição de complexidade ciclomática JaCoCo, delimitação do escopo e levantamento das regras R01–R14.
