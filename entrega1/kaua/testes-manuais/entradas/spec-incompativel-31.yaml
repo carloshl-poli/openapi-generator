@@ -1,0 +1,11 @@
+openapi: 3.1.0
+info:
+  title: Incompatible OAS 3.1 Service
+  version: 1.0.0
+paths:
+  /ping:
+    get:
+      responses:
+        '200':
+          description: pong
+

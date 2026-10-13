@@ -1,0 +1,13 @@
+openapi: 3.0.3
+info:
+  title: Conflict Service
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: Duplicate GET method
+      operationId: duplicateGetUsers
+      responses:
+        '200':
+          description: Conflicting GET
+

@@ -83,6 +83,30 @@ Resultado: **FAIL: 7/7 passos executados; 4 PASS e 3 FAIL (passos 4, 5 e 6)**.
 - [#25236](https://github.com/OpenAPITools/openapi-generator/issues/25236): chaves de um `example` objeto viram tipos de mídia em `generateFromResponseSchema` (CT-EG-45).
 - [#25237](https://github.com/OpenAPITools/openapi-generator/issues/25237): `type: object` sem propriedades gera a string `"{}"` ou `null` (CT-EG-48, CT-EG-52, passo 6 de CTM-EG-01).
 
+### Kauã
+
+#### Testes unitários
+
+- [MergedSpecBuilderJUnitTest.java](../modules/openapi-generator/src/test/java/org/openapitools/codegen/config/MergedSpecBuilderJUnitTest.java)
+- [Oráculos e matriz de testes](kaua/planilha-oraculos-matriz-MergedSpecBuilder.xlsx)
+
+Classe sob teste: `org.openapitools.codegen.config.MergedSpecBuilder` (complexidade ciclomática 119 na classe; 17 em `mergePathItem`, 11 em `resolveOperationIdConflicts`, 11 em `parseSpecFiles` e 10 em `resolveOutputVersion`).
+
+Resultado da suíte: **28 casos executados: 28 PASS e 0 FAIL**.
+
+Cobertura JaCoCo da classe: 91% das instruções (1565 / 1717) e 79% dos desvios (144 / 182).
+
+#### Teste manual
+
+Caso: mescla de especificações e geração de código via CLI (CTM-MSB-01, caso TestLink oag-3).
+
+- [Roteiro do caso](kaua/testes-manuais/CTM-MSB-01.md)
+- [Especificação exportada do TestLink](kaua/testes-manuais/oag-3-merged-spec-cli.xml)
+- [Arquivos de entrada](kaua/testes-manuais/entradas/)
+- [Evidências da execução](kaua/testes-manuais/evidencias/)
+
+Resultado: **PASS: 7/7 passos executados com sucesso**.
+
 ### Carlos Bruno
 
 #### Testes unitários

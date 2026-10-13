@@ -1,0 +1,62 @@
+﻿[main] INFO  o.o.codegen.config.MergedSpecBuilder - Merging 2 explicit spec files into target/manual-test/merged-ref
+[main] INFO  o.o.codegen.config.MergedSpecBuilder - Reading spec: entrega1/kaua/testes-manuais/entradas/spec1-users.yaml
+[main] INFO  o.o.codegen.config.MergedSpecBuilder - Reading spec: entrega1/kaua/testes-manuais/entradas/spec2-orders.yaml
+Merged input spec from explicit file list: C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\merged-ref\api_ref.yaml
+[main] INFO  o.o.codegen.DefaultGenerator - Generating with dryRun=false
+[main] INFO  o.o.codegen.DefaultGenerator - OpenAPI Generator: java (client)
+[main] INFO  o.o.codegen.DefaultGenerator - Generator 'java' is considered stable.
+[main] INFO  o.o.c.languages.AbstractJavaCodegen - Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[main] INFO  o.o.c.languages.AbstractJavaCodegen - NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[main] INFO  o.o.c.languages.AbstractJavaCodegen - Processing operation createUser
+[main] INFO  o.o.c.languages.AbstractJavaCodegen - Processing operation getOrders
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\model\Order.java
+[main] INFO  o.o.codegen.TemplateManager - Skipped C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\test\java\org\openapitools\client\model\OrderTest.java (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\docs\Order.md
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\model\User.java
+[main] INFO  o.o.codegen.TemplateManager - Skipped C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\test\java\org\openapitools\client\model\UserTest.java (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\docs\User.md
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\api\DefaultApi.java
+[main] INFO  o.o.codegen.TemplateManager - Skipped C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\test\java\org\openapitools\client\api\DefaultApiTest.java (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\docs\DefaultApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\pom.xml
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\README.md
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\build.gradle
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\build.sbt
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\settings.gradle
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\gradle.properties
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\AndroidManifest.xml
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\.travis.yml
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\ApiClient.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\ServerConfiguration.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\ServerVariable.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\.github\workflows\maven.yml
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\api\openapi.yaml
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\StringUtil.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\auth\HttpBasicAuth.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\auth\HttpBearerAuth.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\auth\ApiKeyAuth.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\gradlew
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\gradlew.bat
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\gradle\wrapper\gradle-wrapper.properties
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\gradle\wrapper\gradle-wrapper.jar
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\git_push.sh
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\.gitignore
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\ApiException.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\Configuration.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\Pair.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\auth\Authentication.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\ApiCallback.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\ApiResponse.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\JSON.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\ProgressRequestBody.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\ProgressResponseBody.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\GzipRequestInterceptor.java
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\src\main\java\org\openapitools\client\model\AbstractOpenApiSchema.java
+[main] INFO  o.o.codegen.TemplateManager - Skipped C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\.openapi-generator-ignore (Skipped by supportingFiles options supplied by user.)
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\.openapi-generator\VERSION
+[main] INFO  o.o.codegen.TemplateManager - writing file C:\Users\kauag\Documents\GitHub\openapi-generator\target\manual-test\client-ref\.openapi-generator\FILES
+############################################################################################
+# Thanks for using OpenAPI Generator.                                                      #
+# We appreciate your support! Please consider donating to help us maintain this project.   #
+# https://opencollective.com/openapi_generator/donate                                      #
+############################################################################################
