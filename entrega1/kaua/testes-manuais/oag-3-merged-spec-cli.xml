@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testcases>
+<testcase internalid="140" name="Mesclar especificações e gerar código com o comando generate da CLI (CTM-MSB-01)">
+	<node_order><![CDATA[1000]]></node_order>
+	<externalid><![CDATA[3]]></externalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Verificar, no n&iacute;vel do sistema, se o comando generate da interface de linha de comando (CLI) do OpenAPI Generator, que utiliza a classe MergedSpecBuilder, consolida corretamente m&uacute;ltiplos arquivos OpenAPI (modos DEEP e REF), resolve rotas com m&eacute;todos compartilhados, deduplica componentes, trata colis&otilde;es conforme a estrat&eacute;gia (--merge-conflict-strategy WARN/FAIL) e rejeita vers&otilde;es incompat&iacute;veis.</p>
+
+<p>Os resultados esperados se baseiam nas regras R01 a R14 da planilha de or&aacute;culos e no comportamento da CLI em Generate.java.</p>
+]]></summary>
+	<preconditions><![CDATA[<p>- OpenAPI Generator v7.25.0 dispon&iacute;vel e compilado (commit ef964b04480889ef86b56cfae84ade8ad4c91c41).<br />
+- CLI dispon&iacute;vel em modules/openapi-generator-cli/target/openapi-generator-cli.jar.<br />
+- Ambiente Java funcional (Java 11 ou superior).<br />
+- Execu&ccedil;&atilde;o realizada a partir da raiz do reposit&oacute;rio.<br />
+- Arquivos de entrada da pasta entrega1/kaua/testes-manuais/entradas/ dispon&iacute;veis: spec1-users.yaml, spec2-orders.yaml, spec-conflito-metodo.yaml e spec-incompativel-31.yaml.</p>
+]]></preconditions>
+	<execution_type><![CDATA[1]]></execution_type>
+	<importance><![CDATA[2]]></importance>
+	<estimated_exec_duration>5.00</estimated_exec_duration>
+	<status>7</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Verificar a vers&atilde;o da CLI:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar version</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>Imprime 7.25.0. C&oacute;digo de sa&iacute;da 0.</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[2]]></step_number>
+	<actions><![CDATA[<p>Mesclar dois arquivos v&aacute;lidos em modo DEEP e gerar cliente Java:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g java --input-spec-files entrega1/kaua/testes-manuais/entradas/spec1-users.yaml,entrega1/kaua/testes-manuais/entradas/spec2-orders.yaml --merged-file-output-dir target/manual-test/merged --merged-file-name api_unificada --merge-mode DEEP -o target/manual-test/client</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>C&oacute;digo de sa&iacute;da 0. Arquivo api_unificada.yaml criado contendo /users com m&eacute;todos GET e POST, rota /orders e modelos User e Order inlined.</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[3]]></step_number>
+	<actions><![CDATA[<p>Inspecionar classes geradas do cliente:</p>
+
+<p>Verificar exist&ecirc;ncia de User.java e Order.java em target/manual-test/client/src/main/java/org/openapitools/client/model/</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>Classes User.java e Order.java geradas com sucesso sem erros de compila&ccedil;&atilde;o.</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[4]]></step_number>
+	<actions><![CDATA[<p>Mesclar em modo REF (shallow merge):</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g java --input-spec-files entrega1/kaua/testes-manuais/entradas/spec1-users.yaml,entrega1/kaua/testes-manuais/entradas/spec2-orders.yaml --merged-file-output-dir target/manual-test/merged-ref --merged-file-name api_ref --merge-mode REF -o target/manual-test/client-ref</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>C&oacute;digo de sa&iacute;da 0. Arquivo api_ref.yaml gerado contendo $ref relativo para os arquivos de origem.</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[5]]></step_number>
+	<actions><![CDATA[<p>Mesclar com conflito de m&eacute;todo HTTP sob estrat&eacute;gia WARN:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g java --input-spec-files entrega1/kaua/testes-manuais/entradas/spec1-users.yaml,entrega1/kaua/testes-manuais/entradas/spec-conflito-metodo.yaml --merged-file-output-dir target/manual-test/merged-warn --merge-mode DEEP --merge-conflict-strategy WARN -o target/manual-test/client-warn</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>C&oacute;digo de sa&iacute;da 0. Warning emitido no log informando conflito de m&eacute;todo e mantendo a primeira defini&ccedil;&atilde;o.</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[6]]></step_number>
+	<actions><![CDATA[<p>Mesclar com conflito de m&eacute;todo HTTP sob estrat&eacute;gia FAIL:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g java --input-spec-files entrega1/kaua/testes-manuais/entradas/spec1-users.yaml,entrega1/kaua/testes-manuais/entradas/spec-conflito-metodo.yaml --merged-file-output-dir target/manual-test/merged-fail --merge-mode DEEP --merge-conflict-strategy FAIL -o target/manual-test/client-fail</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>Execu&ccedil;&atilde;o abortada com erro e c&oacute;digo de sa&iacute;da diferente de 0.</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+
+<step>
+	<step_number><![CDATA[7]]></step_number>
+	<actions><![CDATA[<p>Tentar mesclar vers&atilde;o OpenAPI 3.0 com 3.1:</p>
+
+<p>java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g java --input-spec-files entrega1/kaua/testes-manuais/entradas/spec1-users.yaml,entrega1/kaua/testes-manuais/entradas/spec-incompativel-31.yaml --merged-file-output-dir target/manual-test/merged-incompatible --merge-mode DEEP -o target/manual-test/client-incompatible</p>
+]]></actions>
+	<expectedresults><![CDATA[<p>Execu&ccedil;&atilde;o abortada com erro acusando vers&otilde;es incompat&iacute;veis (Cannot merge specs that declare incompatible OpenAPI versions).</p>
+]]></expectedresults>
+	<execution_type><![CDATA[1]]></execution_type>
+</step>
+</steps>
+</testcase>
+</testcases>
+

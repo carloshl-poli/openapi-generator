@@ -1,0 +1,14 @@
+---
+openapi: "3.0.3"
+info:
+  title: "merged spec"
+  description: "merged spec"
+  version: "1.0.0"
+servers:
+- url: "https://api.empresa.com/v1"
+- url: "https://orders.empresa.com"
+paths:
+  /users:
+    $ref: "./../../../entrega1/kaua/testes-manuais/entradas/spec2-orders.yaml#/paths/~1users"
+  /orders:
+    $ref: "./../../../entrega1/kaua/testes-manuais/entradas/spec2-orders.yaml#/paths/~1orders"
