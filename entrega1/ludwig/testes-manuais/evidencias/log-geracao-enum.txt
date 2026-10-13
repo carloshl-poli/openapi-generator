@@ -1,0 +1,17 @@
+[main] INFO  o.o.codegen.DefaultGenerator - Generating with dryRun=false
+[main] INFO  o.o.codegen.DefaultGenerator - OpenAPI Generator: openapi (documentation)
+[main] INFO  o.o.codegen.DefaultGenerator - Generator 'openapi' is considered stable.
+[main] INFO  o.o.c.languages.OpenAPIGenerator - Output file name [outputFileName=openapi.json]
+[main] WARN  o.o.codegen.utils.ModelUtils - Failed to get the schema name: null
+[main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+[main] INFO  o.o.c.languages.OpenAPIGenerator - wrote file to /tmp/ctm-no-enum/openapi.json
+[main] INFO  o.o.codegen.DefaultGenerator - Operation (get /admin/status - adminStatus) not generated since x-internal is set to true
+[main] INFO  o.o.codegen.TemplateManager - writing file /tmp/ctm-no-enum/README.md
+[main] INFO  o.o.codegen.TemplateManager - Skipped /tmp/ctm-no-enum/.openapi-generator-ignore (Skipped by supportingFiles options supplied by user.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /tmp/ctm-no-enum/.openapi-generator/VERSION
+[main] INFO  o.o.codegen.TemplateManager - writing file /tmp/ctm-no-enum/.openapi-generator/FILES
+############################################################################################
+# Thanks for using OpenAPI Generator.                                                      #
+# We appreciate your support! Please consider donating to help us maintain this project.   #
+# https://opencollective.com/openapi_generator/donate                                      #
+############################################################################################
